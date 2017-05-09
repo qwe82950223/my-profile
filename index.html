@@ -1,0 +1,389 @@
+<DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="myprofile.css">
+<link href="https://fonts.googleapis.com/css?family=Droid+Serif|Anton|Bitter" rel="stylesheet"> 
+<meta charset="utf-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script>
+var slideIndex = 0;
+var initial;
+function showSlides() {
+    Slides(slideIndex+=1);
+    initial= setTimeout(showSlides, 6000); // Change image every 2 seconds
+}
+
+
+function plusSlides(n) {
+  Slides(slideIndex += n);
+  clearTimeout( initial )
+  initial = setTimeout(showSlides, 6000); 
+}
+
+function currentSlide(n) {
+  Slides(slideIndex = n);
+  clearTimeout( initial )
+  initial = setTimeout(showSlides, 6000); 
+}
+
+function Slides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+}
+
+function changeSlideImage(name){
+	for(i=1;i<4;i++){
+		var slidenumber= "slide"+i;
+		var imageName= "home/"+name+i+".png";
+    	document.getElementById(slidenumber).src=imageName;
+	}
+}
+
+function myMap() {
+	var myLatlng = new google.maps.LatLng(40.709609,-73.851485);
+	var mapOptions = {
+		zoom: 15,
+		center: myLatlng
+	}
+	var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+	var marker = new google.maps.Marker({
+		position: myLatlng,
+		map: map,
+		title: 'Hello World!'
+	});
+}
+
+
+
+	function changeBorder(x){
+		var items=document.getElementsByClassName("menu-item");
+		for(i=0;i<items.length;i++){
+			items[i].style.border="none";
+		}
+		items[x].style.borderBottom="solid 9px white";
+	}
+	
+	function showFrame(x){
+	var frames=document.getElementsByClassName("frames");
+		document.getElementById("menu-works").style.display="none";
+		for(i=0;i<frames.length;i++){
+			frames[i].style.display="none";
+		}
+		if(x==2){
+			document.getElementById("menu-works").style.display="flex";
+			var all=document.getElementsByClassName("allwork");
+				for(i=0;i<all.length;i++){
+					all[i].style.display="inline-block";
+				} 
+		}
+		frames[x].style.display="block";
+		
+	}
+	
+	function workFunction(name){
+			var all=document.getElementsByClassName("allwork");
+				for(i=0;i<all.length;i++){
+					all[i].style.display="none";
+				}
+				var pw=document.getElementsByClassName(name);
+				var z;
+				for(z=0;z<pw.length;z++){
+					pw[z].style.display="inline-block";
+				}
+		}	
+		
+		var slide;
+		
+		function workslide(name){
+			var i=2;
+			slide=setInterval(function(){
+				if(i>4){
+					i=1;
+				}
+				filename="home/"+name+i+'.png';
+				document.getElementById(name).src=filename;
+				i++;
+			},1200);
+		}
+		
+
+		function shutdown(name){
+			clearInterval(slide);
+			document.getElementById(name).src="home/"+name+1+".png";
+		}
+		
+		var open=true;
+		
+		function openMenu(){
+			if(open){
+				document.getElementById('mobileMenu').style.display="block";
+				document.getElementById('popout').style.display="block";
+				open=false;
+			}
+			else{
+				closeMenu();
+			}
+			
+		}
+		
+		function closeMenu(){
+			document.getElementById('mobileMenu').style.display="none";
+			document.getElementById('popout').style.display="none";
+			open=true;
+		}
+		
+		function openDescribe(n){
+			if(window.innerWidth<1000){
+				document.getElementById('selection').style.display="none";
+			}
+			document.getElementById('describes-box').style.display="block";
+			document.getElementById('describes-box').style.top=window.pageYOffset+70;
+			document.getElementById('popout').style.display="block";
+			document.getElementById('close-describe').style.display="block";
+			document.getElementById('close-describe').style.top=window.pageYOffset+50;
+			var describes = document.getElementsByClassName('describes');
+			describes[n].style.display="block";
+		}
+		
+		function closeDescribe(){
+			if(window.innerWidth<1000){
+				document.getElementById('selection').style.display="block";
+			}
+			document.getElementById('describes-box').style.display="none";
+			document.getElementById('popout').style.display="none";
+			document.getElementById('close-describe').style.display="none";
+			var describes = document.getElementsByClassName('describes');
+			for(z=0;z<describes.length;z++){
+					describes[z].style.display="none";
+			}
+			
+		}
+		function detectmob() { 
+			if( navigator.userAgent.match(/Android/i)
+				|| navigator.userAgent.match(/webOS/i)
+				|| navigator.userAgent.match(/iPhone/i)
+				|| navigator.userAgent.match(/iPad/i)
+				|| navigator.userAgent.match(/iPod/i)
+				|| navigator.userAgent.match(/BlackBerry/i)
+				|| navigator.userAgent.match(/Windows Phone/i)
+				){
+					return true;
+			}
+			else {
+				return false;
+			}
+		}
+		function res(){
+			if(!detectmob()){
+				document.getElementById('popout').style.display="none";
+				document.getElementById('describes-box').style.display="none";
+				document.getElementById('mobileMenu').style.display="none";
+			}
+			if(window.innerWidth<1000){
+				document.getElementById('selection').style.display="block";
+			}
+			else{
+				document.getElementById('selection').style.display="none";
+			}
+		}
+		
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+
+<title>Xiao Lin</title>
+</head>
+
+<body onload="myMap(),showSlides()" onresize="res()">
+	
+	
+	<!window menu>
+	<div id="header">
+		<div id="myPicture"></div>
+		<h1 style="font-size:40px;">Xiao Lin<h1>
+		<p>Computer Science</p>
+		<div id="menu">
+			<ul id="menu-bar">
+				<li class="menu-item" onclick="changeBorder(0), showFrame(0)"><a>About Me</a></li>
+				<li class="menu-item" onclick="changeBorder(1), showFrame(1)"><a>Resume</a></li>
+				<li class="menu-item" onclick="changeBorder(2), showFrame(2)"><a>Works</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<!works describes pop out >
+	<div id="popout"></div>
+	<div id="describes-box">
+		<div id="img-slide">
+			<div class="mySlides fade">
+    			<img id="slide1" src="" height="auto" width="100%;">
+  			</div>
+
+  			<div class="mySlides fade" >
+    			<img id="slide2" src="" height="auto" width="100%;">
+  			</div>
+
+  			<div class="mySlides fade">
+    			<img  id="slide3" src="" height="auto" width="100%;" >
+  			</div>
+
+  			<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  			<a class="next" onclick="plusSlides(1)">&#10095;</a>
+		</div>
+		<div id="dot">
+ 			<span class="dot" onclick="currentSlide(1)"></span>
+  			<span class="dot" onclick="currentSlide(2)"></span>
+  			<span class="dot" onclick="currentSlide(3)"></span>
+		</div>
+
+		<div id="moving-company" class="describes">
+			<h1><a href="http://www.xqdmoving.com">Moving Company</a></h1>
+			<p>Using html, css and javascript help customer build a website for moving company</p>
+		</div>
+		<div id="snowSugar" class="describes">
+			<h1><a href="http://snowsugar.com/">SnowSugar Video</a></h1>
+			<p>Using wordPress to build a membership site by using plugin, html, and php</p>
+		</div>
+    	<div id="myProfile" class="describes">
+    		<h1><a href="http://www.linxiaocsprofile.com">My Profile</a></h1>
+			<p>Using html, css and javascript to build my own profile site</p>
+		</div>
+		<div id="restaurant" class="describes">
+			<h1><a href="http://vn2ny.com/">Restaurant</a></h1>
+			<p>Helping customer to build a vietnamese food website using html, css, javascript</p>
+		</div>
+	</div>
+	<div id="close-describe" onclick="closeDescribe()"></div>
+
+	<!mobile menu>
+	<div id="selection"><img src="home/menu.png" onclick="openMenu()" height="150" width="150" style="cursor: pointer">
+			<div id="mobileMenu">
+				<ul id="mobile-menu-bar">
+				<li class="mobile-menu-item" onclick="showFrame(0), closeMenu(),changeBorder(0)">About Me</li>
+				<li class="mobile-menu-item" onclick="showFrame(1), closeMenu(),changeBorder(1)">Resume</li>
+				<li class="mobile-menu-item" onclick="showFrame(2), closeMenu(),changeBorder(2)">Works</li>
+				<li class="mobile-menu-item" onclick="showFrame(3), closeMenu(),changeBorder(3)">Contact</li>
+				<li class="mobile-menu-item" onclick="closeMenu()"><img src="home/up.png" width="100px" height="40px" style="margin-top:50px;"></li>
+				</ul>
+			</div>
+	</div>
+	
+	<!works menu>
+	<ul id="menu-works">
+		<li class="work" onclick="workFunction('html')">html</li>
+		<li class="work" onclick="workFunction('java')">java</li>
+		<li class="work" onclick="workFunction('c++')">c++</li>
+	</ul>
+	
+	<!body for each frame>
+	<div id="body-frame">
+		<!about frame>
+		<div class="frames" id="about-frame">
+			<div id="about-part">
+				<br>
+				<div class="title-header" ><span style="font-size:60px;">A</span>BOUT</div>
+				<br>
+				<p style="text-indent: 2em;	line-height:2em;">My name is Xiao Lin. I am majoring in computer science at Queens college.I was first introduced to computer science when I took java back in High school. I felt I learn a lot of thing and really got into it. Because writing code is different from writing literature. I enjoy the process of solve problems. Sometimes I have to think reaaly hard and spend a lot of time to come up something, but when i eventually implement my algorithm, and get the expective output i want, that is reaaly just happiest feeling i can feel at that moment. I feel like I accomplished something.</p>
+				<br>
+				<br>
+				<br>
+			</div>
+
+			<div id="contact-content">
+				<div class="title-header" ><span style="font-size:60px;">C</span>ONTACT</div>
+				<br><br>
+				<div class="contact-info"><a href="http://maps.google.com/?q=91-31 71st Ave, Forest Hills, NY, 11375"><img src="home/address.png" width="30px;" ></a><br><br>91-31 71st Ave<br>Forest Hills, NY 11375</div>
+				<div class="contact-info"><a><img src="home/email.png" width="30px;" ></a><br><br>linxiao0106@gmail.com</div>
+				<div class="contact-info"><a><img src="home/phone.png" width="30px;" ></a><br><br>(917)680-2883</div>
+			</div>
+			<div id="map-canvas"></div>
+
+		</div>
+
+		<!resume frame>
+		<div class="frames" id="resume-frame" style="display:none;width:90%;min-width:700px;max-width:1000px;height:1400px;border:solid 1px #ccd0d3;margin:-100px auto;box-shadow:10px 15px 20px grey;">
+			<div  id="resume-body">
+				<h3 class="texture">OBJECTIVE</h3>
+				<ul class="texture texture-des-body">
+					<li>Good communicative skill in both verbal and writing</li>
+					<li>Gard worker who is eager to learn and apply education</li>
+					<li>Research skill and memory is very strong</li>
+				</ul>
+				
+				<h3 class="texture">EDUCATION</h3>
+				<table class="texture texture-edu-body">
+					<tr><td>Queens College</td> <td>B.A.Computer Science</td></tr>
+					<tr><td></td><td>August 2013-2016</td></tr>
+					<tr><td>Benjamin N.Cardozo High School</td><td></td></tr>
+					<tr><td></td><td>Completed:July 2012</td></tr>
+				</table>
+				
+				<h3 class="texture">RELEVANT COURSES</h3>
+				<table class="texture texture-cou-body">
+					<tr><td>C++ Programming I,II</td><td>Computer Architecture</td></tr>
+					<tr><td>Data Structure</td><td>Assembly Language</td></tr>
+					<tr><td>Java Programming</td><td>Database</td></tr>
+					<tr><td>Mechine Learning</td><td></td></tr>
+				</table>
+				
+				<h3 class="texture">PROJECT</h3>
+				<div class="texture-pro">
+					<p><b>Arithmetic Expression Project</b> - write a program that takes as input a fully parenthesized, arithmetic expression and converts it to a binary expression tree.</p>
+					<p><b>Connet java to Database</b> - use java to connect with database and insert data into it.</p>
+					<p><b>A Chinese Moving Website</b> - create a website using html with hosting and domain name (<a href="http://www.xqdmoving.com">www.xqdmoving.com</a>)</p>
+				</div>
+				
+				<h3 class="texture">SKILLS</h3>
+				<ul class="texture texture-ski-body">
+					<li>Programming Experience - C++, Java, HTML, CSS, JavaScript, WordPress, photoshop and PHP</li>
+					<li>Computer Skills - Microsoft Word, Microsoft Excel and Power point</li>
+					<li>Writing Skills - Ability to efficiently prodece concise, organized reports, labs and memos</li>
+					<li>Language: Fluent in Chinese and English</li>
+				</ul>
+				
+				<h3 class="texture">WORK EXPERIENCE</h3>
+				<table class="texture texture-exp-body">
+					<tr><td><b>SnowSugar Video-Long Island City,NY</b></td><td>July,2016-October,2016</td></tr>
+					<tr><td colspan="2" >Front End Developer(using wordpress to design a membership wesite: <a href="http://snowsugar.com">snowsugar.com</a></td></tr>
+					<tr><td><b>Coco Milk Tea-Flushing,NY</b></td><td>May,2013-September,2014</td></tr>
+					<tr><td colspan="2">CustomerService and Sales</td><td></td></tr>
+				</table>
+				<div style="margin-left:auto;margin-top:30px;height:60px;width:200px;">
+					<a href="home/download.png" download>
+						<img border="0" src="home/download.png" height="60px" width="200px">
+					</a>
+				</div>
+			</div>
+		</div>
+		<!works frame>
+		<div class="frames" id="works-frame">
+			<ul>
+				<li  class="allwork html" id="work1"><img id="html1" onclick="openDescribe(0),changeSlideImage('html1')" onmouseover="workslide('html1')" onmouseout="shutdown('html1')" src="home/html11.png"><p>Moving Company</p></li>
+				<li  class="allwork html" id="work2"><img id="html2" onclick="openDescribe(1),changeSlideImage('html2')"  onmouseover="workslide('html2')" onmouseout="shutdown('html2')" src="home/html21.png"><p>SnowSugar Video</p></li>
+				<li  class="allwork html" id="work3"><img id="html3" onclick="openDescribe(2),changeSlideImage('html3')"  onmouseover="workslide('html3')" onmouseout="shutdown('html3')" src="home/html31.png"><p>My Profile</p></li>
+				<li  class="allwork html" id="work4"><img id="html4" onclick="openDescribe(3),changeSlideImage('html4')"  onmouseover="workslide('html4')" onmouseout="shutdown('html4')" src="home/html41.png"><p>restaurant</p></li>
+			</ul>
+
+		</div>
+		<!contact frame>
+		<div class="frames" id="contact-frame">
+			
+		</div>
+		
+	</div>
+	
+	
+</body>
+
+</html>
+
