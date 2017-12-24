@@ -1,3 +1,3 @@
 # my-profile
-my profile page
+using javascript to make my profile page
 linxiaocsprofile.com
